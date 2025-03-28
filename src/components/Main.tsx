@@ -1,46 +1,66 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+
 interface UnsplashImage {
     id: string;
     urls: { regular: string };
     slug: string;
     user: { username: string };
 }
+
 interface UnsplashImageData {
     idImage: string;
     urlImage: string;
     imageSlug: string;
     imageUser: string;
 }
+
 function Main() {
     const [images, setImages] = useState<UnsplashImageData[]>([]);
+    const [visibleImages, setVisibleImages] = useState(9);
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         const getImages = async () => {
-            const API_URL = "https://api.unsplash.com/photos/random?count=12";
-            const response = await fetch(API_URL, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Client-ID ${import.meta.env.VITE_ACCESS_KEY}`,
-                },
-            });
-            if (!response.ok) {
-                throw new Error("Failed to fetch images");
+            setLoading(true);
+            try {
+                const API_URL = `https://api.unsplash.com/photos/random?count=9`;
+                const response = await fetch(API_URL, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Client-ID ${import.meta.env.VITE_ACCESS_KEY}`,
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error("Failed to fetch images");
+                }
+
+                const data: UnsplashImage[] = await response.json();
+                const newImages = data.map((image: UnsplashImage) => ({
+                    idImage: image.id,
+                    urlImage: image.urls.regular,
+                    imageSlug: image.slug,
+                    imageUser: image.user.username,
+                }));
+
+                setImages((prev) => [...prev, ...newImages]);
+            } catch (error) {
+                console.error("Error fetching images:", error);
+            } finally {
+                setLoading(false);
             }
-            const data: UnsplashImage[] = await response.json();
-            const imagesData = data.map((image: UnsplashImage) => ({
-                idImage: image.id,
-                urlImage: image.urls.regular,
-                imageSlug: image.slug,
-                imageUser: image.user.username,
-            }))
-            setImages(imagesData);
+        };
+
+        if (visibleImages > images.length) {
+            getImages();
         }
-        getImages();
-    }, [])
+    }, [visibleImages, images.length]);
+
     return (
         <main className="min-h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <section className="grid grid-cols-3 gap-4 bg-white w-full max-w-6xl p-2">
-                {images.map((image) => (
+                {images.slice(0, visibleImages).map((image) => (
                     <div
                         key={image.idImage}
                         className="relative flex flex-col items-center justify-center group hover:scale-[0.98] transition-all duration-300 ease-out shadow-sm hover:shadow-lg rounded-lg overflow-hidden"
@@ -58,8 +78,25 @@ function Main() {
                     </div>
                 ))}
             </section>
+
+            {loading ? (
+                <div className="flex justify-center items-center my-4">
+                    <div className="w-8 h-8 border-4 border-teal-500 border-t-transparent rounded-full 
+                                animate-spin">
+                    </div>
+                </div>
+            ) : (
+                <button
+                    className="px-3 py-1.5 bg-transparent border-2 border-teal-500 text-teal-600 font-semibold rounded-lg w-full max-w-xs my-4 
+                    hover:bg-teal-500 hover:text-white hover:border-transparent hover:cursor-pointer 
+                    transition-all duration-300 ease-out"
+                    onClick={() => setVisibleImages((prev) => prev + 9)}
+                >
+                    Ver más
+                </button>
+            )}
         </main>
-    )
+    );
 }
 
-export default Main
+export default Main;
