@@ -44,7 +44,11 @@ function Main() {
                     imageUser: image.user.username,
                 }));
 
-                setImages((prev) => [...prev, ...newImages]);
+                setImages((prev) => {
+                    const existingIds = new Set(prev.map((img) => img.idImage));
+                    const filteredImages = newImages.filter((img) => !existingIds.has(img.idImage));
+                    return [...prev, ...filteredImages];
+                });
             } catch (error) {
                 console.error("Error fetching images:", error);
             } finally {
