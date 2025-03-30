@@ -72,7 +72,7 @@ function Main() {
 
     return (
         <main className="min-h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-            <section className="relative grid grid-cols-3 gap-4 bg-white w-full max-w-6xl p-2">
+            <section className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 bg-white w-full max-w-6xl p-2">
                 {images.slice(0, visibleImages).map((image) => (
                     <>
                         <div
