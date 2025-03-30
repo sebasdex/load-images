@@ -74,23 +74,23 @@ function Main() {
 
     return (
         <main className="min-h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-            <section className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 bg-white w-full max-w-6xl p-2">
+            <section className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl p-6 rounded-xl">
                 {images.slice(0, visibleImages).map((image) => (
                     <div
                         onClick={() => handleImageClick(image.urlImage)}
                         key={image.idImage}
-                        className="flex flex-col items-center justify-center group hover:scale-[0.98] transition-all duration-300 ease-out shadow-sm hover:shadow-lg rounded-lg overflow-hidden hover:cursor-pointer"
+                        className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl hover:scale-[0.98] transition-all duration-300 ease-out cursor-pointer bg-white"
                     >
                         <img
                             src={image.urlImage}
-                            alt="Image"
-                            className="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-90"
+                            alt={image.imageUser}
+                            className="w-full h-64 object-cover transition-opacity duration-300 group-hover:opacity-95"
                         />
-                        <p
-                            className="absolute bottom-0 left-0 right-0 text-center text-sm font-medium text-gray-800 italic p-2 bg-gradient-to-t from-gray-100/90 to-transparent opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 ease-out"
-                        >
-                            by {image.imageUser}
-                        </p>
+                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-gray-800/80 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out">
+                            <p className="text-center text-sm font-medium text-white italic">
+                                by {image.imageUser}
+                            </p>
+                        </div>
                     </div>
                 ))}
             </section>
