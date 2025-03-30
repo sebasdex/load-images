@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import ModalImage from "./ModalImage";
 
 interface UnsplashImage {
     id: string;
@@ -18,6 +19,8 @@ function Main() {
     const [images, setImages] = useState<UnsplashImageData[]>([]);
     const [visibleImages, setVisibleImages] = useState(9);
     const [loading, setLoading] = useState(false);
+    const [isImageOpen, setIsImageOpen] = useState(false);
+    const [currentIdModalImage, setCurrentIdModalImage] = useState('');
 
     useEffect(() => {
         const getImages = async () => {
@@ -61,27 +64,43 @@ function Main() {
         }
     }, [visibleImages, images.length]);
 
+    const handleImageClick = (id: string) => {
+        setIsImageOpen(true);
+        setCurrentIdModalImage(id);
+        console.log('The image id is: ', id);
+    }
+
     return (
         <main className="min-h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-            <section className="grid grid-cols-3 gap-4 bg-white w-full max-w-6xl p-2">
+            <section className="relative grid grid-cols-3 gap-4 bg-white w-full max-w-6xl p-2">
                 {images.slice(0, visibleImages).map((image) => (
-                    <div
-                        key={image.idImage}
-                        className="relative flex flex-col items-center justify-center group hover:scale-[0.98] transition-all duration-300 ease-out shadow-sm hover:shadow-lg rounded-lg overflow-hidden"
-                    >
-                        <img
-                            src={image.urlImage}
-                            alt="Image"
-                            className="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-90"
-                        />
-                        <p
-                            className="absolute bottom-0 left-0 right-0 text-center text-sm font-medium text-gray-800 italic p-2 bg-gradient-to-t from-gray-100/90 to-transparent opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 ease-out"
+                    <>
+                        <div
+                            onClick={() => handleImageClick(image.idImage)}
+                            key={image.idImage}
+                            className="flex flex-col items-center justify-center group hover:scale-[0.98] transition-all duration-300 ease-out shadow-sm hover:shadow-lg rounded-lg overflow-hidden hover:cursor-pointer"
                         >
-                            by {image.imageUser}
-                        </p>
-                    </div>
+                            <img
+                                src={image.urlImage}
+                                alt="Image"
+                                className="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-90"
+                            />
+                            <p
+                                className="absolute bottom-0 left-0 right-0 text-center text-sm font-medium text-gray-800 italic p-2 bg-gradient-to-t from-gray-100/90 to-transparent opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 ease-out"
+                            >
+                                by {image.imageUser}
+                            </p>
+                        </div>
+                        {isImageOpen && currentIdModalImage === image.idImage && (
+                            <ModalImage
+                                imageURL={image.urlImage}
+                                setIsImageOpen={setIsImageOpen}
+                            />
+                        )}
+                    </>
                 ))}
             </section>
+
 
             {loading ? (
                 <div className="flex justify-center items-center my-4">
