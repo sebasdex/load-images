@@ -22,7 +22,7 @@ function ModalImage({ imageURL, setIsImageOpen }: ModalImageProps) {
         setIsImageOpen(false);
     }
     return (
-        <dialog className="fixed z-10 inset-0 min-h-screen w-full bg-black/50 backdrop-blur-sm flex flex-col items-center justify-center"
+        <dialog className="fixed p-4 z-10 inset-0 min-h-screen w-full bg-black/50 backdrop-blur-sm flex flex-col items-center justify-center"
         >
             <button className="absolute top-4 right-4 p-2 text-white rounded-full hover:bg-white group hover:cursor-pointer"
                 onClick={handleCloseModal}
@@ -31,7 +31,7 @@ function ModalImage({ imageURL, setIsImageOpen }: ModalImageProps) {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
-            <div className="bg-white rounded-lg p-4 w-full max-w-xl">
+            <div className="bg-white rounded-lg p-3 w-full max-w-xl">
                 <img src={imageURL} alt="Image" className="object-cover h-full mx-auto" />
             </div>
         </dialog>
