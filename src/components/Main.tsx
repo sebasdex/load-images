@@ -26,7 +26,7 @@ interface UnsplashImageData {
 
 function Main() {
     const [images, setImages] = useState<UnsplashImageData[]>([]);
-    const [visibleImages, setVisibleImages] = useState(9);
+    const [visibleImages, setVisibleImages] = useState(27);
     const [loading, setLoading] = useState(false);
     const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
     const [downloadCount, setDownloadCount] = useState(0);
@@ -40,7 +40,7 @@ function Main() {
         const getImages = async () => {
             setLoading(true);
             try {
-                const API_URL = `https://api.unsplash.com/photos/random?count=9`;
+                const API_URL = `https://api.unsplash.com/photos/random?count=27`;
                 const response = await fetch(API_URL, {
                     method: "GET",
                     headers: {
@@ -133,7 +133,7 @@ function Main() {
             ) : (
                 <button
                     className="px-3 py-1.5 bg-transparent border-2 border-teal-500 text-teal-600 font-semibold rounded-lg w-full max-w-xs my-4 hover:bg-teal-500 hover:text-white hover:border-transparent hover:cursor-pointer transition-all duration-300 ease-out"
-                    onClick={() => setVisibleImages((prev) => prev + 9)}
+                    onClick={() => setVisibleImages((prev) => prev + 27)}
                 >
                     Ver más
                 </button>
