@@ -5,7 +5,11 @@ interface UnsplashImage {
     id: string;
     urls: { regular: string };
     slug: string;
-    user: { username: string };
+    user: { username: string; profile_image: { large: string } };
+    downloads: number;
+    likes: number;
+    views: number;
+    alt_description: string;
 }
 
 interface UnsplashImageData {
@@ -13,6 +17,11 @@ interface UnsplashImageData {
     urlImage: string;
     imageSlug: string;
     imageUser: string;
+    profileImage: string;
+    downloadsNumber: number;
+    likesNumber: number;
+    viewsNumber: number;
+    imageDescription: string;
 }
 
 function Main() {
@@ -20,6 +29,12 @@ function Main() {
     const [visibleImages, setVisibleImages] = useState(9);
     const [loading, setLoading] = useState(false);
     const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
+    const [downloadCount, setDownloadCount] = useState(0);
+    const [likeCount, setLikeCount] = useState(0);
+    const [viewCount, setViewCount] = useState(0);
+    const [description, setDescription] = useState("");
+    const [imageUser, setImageUser] = useState("");
+    const [profileImage, setProfileImage] = useState("");
 
     useEffect(() => {
         const getImages = async () => {
@@ -44,6 +59,12 @@ function Main() {
                     urlImage: image.urls.regular,
                     imageSlug: image.slug,
                     imageUser: image.user.username,
+                    profileImage: image.user.profile_image.large,
+                    downloadsNumber: image.downloads,
+                    likesNumber: image.likes,
+                    viewsNumber: image.views,
+                    imageDescription: image.alt_description,
+
                 }));
 
                 setImages((prev) => {
@@ -61,11 +82,16 @@ function Main() {
         if (visibleImages > images.length && !loading) {
             getImages();
         }
-
     }, [visibleImages, images.length]);
 
-    const handleImageClick = (url: string) => {
+    const handleImageClick = (url: string, image: UnsplashImageData) => {
         setSelectedImageUrl(url);
+        setDownloadCount(image.downloadsNumber);
+        setLikeCount(image.likesNumber);
+        setViewCount(image.viewsNumber);
+        setDescription(image.imageDescription);
+        setImageUser(image.imageUser);
+        setProfileImage(image.profileImage);
     };
 
     const handleCloseModal = () => {
@@ -77,17 +103,22 @@ function Main() {
             <section className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl p-6 rounded-xl">
                 {images.slice(0, visibleImages).map((image) => (
                     <div
-                        onClick={() => handleImageClick(image.urlImage)}
+                        onClick={() => handleImageClick(image.urlImage as string, image)}
                         key={image.idImage}
                         className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl hover:scale-[0.98] transition-all duration-300 ease-out cursor-pointer bg-white"
                     >
                         <img
                             src={image.urlImage}
-                            alt={image.imageUser}
-                            className="w-full h-64 object-cover transition-opacity duration-300 group-hover:opacity-95"
+                            alt={`Photo by ${image.imageUser}`}
+                            className="w-full h-64 object-cover flex items-center justify-center transition-opacity duration-300 group-hover:opacity-90"
                         />
-                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-gray-800/80 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out">
-                            <p className="text-center text-sm font-medium text-white italic">
+                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-gray-800/80 to-transparent p-2 flex items-center justify-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out">
+                            <img
+                                src={image.profileImage}
+                                alt={`Profile of ${image.imageUser}`}
+                                className="w-6 h-6 rounded-full object-cover"
+                            />
+                            <p className="text-xs font-medium text-white italic">
                                 by {image.imageUser}
                             </p>
                         </div>
@@ -109,7 +140,7 @@ function Main() {
             )}
 
             {selectedImageUrl && (
-                <ModalImage imageURL={selectedImageUrl} setIsImageOpen={handleCloseModal} />
+                <ModalImage imageURL={selectedImageUrl} setIsImageOpen={handleCloseModal} downloadCount={downloadCount} likeCount={likeCount} viewCount={viewCount} description={description} imageUser={imageUser} profileImage={profileImage} />
             )}
         </main>
     );
