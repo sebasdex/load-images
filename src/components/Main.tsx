@@ -31,7 +31,7 @@ interface UnsplashImageData {
     unsplashURL: string;
 }
 
-function Main() {
+function Main({ isDark }: { isDark: boolean }) {
     const [images, setImages] = useState<UnsplashImageData[]>([]);
     const [visibleImages, setVisibleImages] = useState(27);
     const [loading, setLoading] = useState(false);
@@ -122,20 +122,20 @@ function Main() {
     };
 
     return (
-        <main className="min-h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-            <section className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl p-6 rounded-xl">
+        <main className={`${isDark ? "dark" : ""} min-h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900`}>
+            <section className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl p-6 rounded-xl bg-white dark:bg-gray-900">
                 {images.slice(0, visibleImages).map((image) => (
                     <div
                         onClick={() => handleImageClick(image.urlImage as string, image)}
                         key={image.idImage}
-                        className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl hover:scale-[0.98] transition-all duration-300 ease-out cursor-pointer bg-white"
+                        className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl hover:scale-[0.98] transition-all duration-300 ease-out cursor-pointer bg-white dark:bg-gray-700"
                     >
                         <img
                             src={image.urlImage}
                             alt={`Photo by ${image.imageUser}`}
                             className="w-full h-64 object-cover flex items-center justify-center transition-opacity duration-300 group-hover:opacity-90"
                         />
-                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-gray-800/80 to-transparent p-2 flex items-center justify-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out">
+                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-gray-800/80 dark:from-gray-900/80 to-transparent p-2 flex items-center justify-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out">
                             <img
                                 src={image.profileImage}
                                 alt={`Profile of ${image.imageUser}`}
@@ -151,11 +151,11 @@ function Main() {
 
             {loading ? (
                 <div className="flex justify-center items-center my-4">
-                    <div className="w-8 h-8 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
+                    <div className="w-8 h-8 border-4 border-teal-500 dark:border-teal-400 border-t-transparent rounded-full animate-spin"></div>
                 </div>
             ) : (
                 <button
-                    className="px-3 py-1.5 bg-transparent border-2 border-teal-500 text-teal-600 font-semibold rounded-lg w-full max-w-xs my-4 hover:bg-teal-500 hover:text-white hover:border-transparent hover:cursor-pointer transition-all duration-300 ease-out"
+                    className="px-3 py-1.5 bg-transparent border-2 border-teal-500 dark:border-teal-400 text-teal-600 dark:text-teal-400 font-semibold rounded-lg w-full max-w-xs my-4 hover:bg-teal-500 dark:hover:bg-teal-400 hover:text-white hover:border-transparent hover:cursor-pointer transition-all duration-300 ease-out"
                     onClick={() => setVisibleImages((prev) => prev + 27)}
                 >
                     Ver más
@@ -163,7 +163,19 @@ function Main() {
             )}
 
             {selectedImageUrl && (
-                <ModalImage imageURL={selectedImageUrl} setIsImageOpen={handleCloseModal} downloadCount={downloadCount} likeCount={likeCount} viewCount={viewCount} description={description} imageUser={imageUser} profileImage={profileImage} datePublished={datePublished} dimensions={dimensions} unsplashURL={unsplashURL} />
+                <ModalImage
+                    imageURL={selectedImageUrl}
+                    setIsImageOpen={handleCloseModal}
+                    downloadCount={downloadCount}
+                    likeCount={likeCount}
+                    viewCount={viewCount}
+                    description={description}
+                    imageUser={imageUser}
+                    profileImage={profileImage}
+                    datePublished={datePublished}
+                    dimensions={dimensions}
+                    unsplashURL={unsplashURL}
+                />
             )}
         </main>
     );

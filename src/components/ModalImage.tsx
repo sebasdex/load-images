@@ -31,17 +31,15 @@ function ModalImage({ imageURL, setIsImageOpen, downloadCount, likeCount, viewCo
         setIsImageOpen(false);
     }
     return (
-        <dialog
-            className="fixed z-10 inset-0 w-full h-full bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 md:p-6"
-        >
+        <dialog className="fixed z-10 inset-0 w-full h-full bg-black/70 dark:bg-gray-900/80 backdrop-blur-sm flex items-center justify-center p-4 md:p-6">
             {/* Botón de cerrar */}
             <button
-                className="absolute top-3 right-3 p-1.5 bg-gray-900/50 text-white rounded-full hover:bg-white group transition-all duration-200 hover:cursor-pointer"
+                className="absolute top-3 right-3 p-1.5 bg-gray-900/50 dark:bg-gray-700/50 text-white dark:text-gray-200 rounded-full hover:bg-white dark:hover:bg-gray-600 group transition-all duration-200 hover:cursor-pointer"
                 onClick={handleCloseModal}
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 group-hover:text-gray-800 text-white"
+                    className="h-5 w-5 group-hover:text-gray-800 dark:group-hover:text-gray-100 text-white dark:text-gray-200"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -52,7 +50,7 @@ function ModalImage({ imageURL, setIsImageOpen, downloadCount, likeCount, viewCo
             </button>
 
             {/* Contenedor principal */}
-            <div className="rounded-xl w-full max-w-4xl flex flex-col md:flex-row overflow-hidden shadow-2xl">
+            <div className="rounded-xl w-full max-w-4xl flex flex-col md:flex-row overflow-hidden shadow-2xl bg-white dark:bg-gray-800">
                 {/* Imagen */}
                 <div className="w-full md:w-2/3 h-64 md:h-[32rem] relative">
                     <img
@@ -63,38 +61,38 @@ function ModalImage({ imageURL, setIsImageOpen, downloadCount, likeCount, viewCo
                 </div>
 
                 {/* Datos */}
-                <div className="w-full md:w-1/3 p-4 md:p-5 bg-gray-100 flex flex-col">
+                <div className="w-full md:w-1/3 p-4 md:p-5 bg-gray-100 dark:bg-gray-700 flex flex-col">
                     {/* Autor y perfil */}
                     <div className="mb-3">
                         <div className="flex items-center space-x-3">
                             <img
                                 src={profileImage}
                                 alt={`Profile of ${imageUser}`}
-                                className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover border-2 border-indigo-500"
+                                className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover border-2 border-indigo-500 dark:border-indigo-400"
                             />
                             <div>
-                                <p className="text-sm md:text-base font-semibold text-gray-900">
+                                <p className="text-sm md:text-base font-semibold text-gray-900 dark:text-gray-100">
                                     {imageUser}
                                 </p>
-                                <p className="text-xs text-gray-600">Photographer</p>
+                                <p className="text-xs text-gray-600 dark:text-gray-400">Photographer</p>
                             </div>
                         </div>
                     </div>
 
                     {/* Descripción */}
                     <div className="mb-3">
-                        <p className="text-sm text-gray-700 italic leading-tight">
+                        <p className="text-sm text-gray-700 dark:text-gray-300 italic leading-tight">
                             {description || "No description available"}
                         </p>
                     </div>
 
                     {/* Info adicional */}
-                    <div className="flex-1 flex flex-col justify-between text-gray-800 text-sm space-y-2">
+                    <div className="flex-1 flex flex-col justify-between text-gray-800 dark:text-gray-200 text-sm space-y-2">
                         <div className="space-y-2">
                             <div className="flex items-center space-x-2">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    className="h-4 w-4 text-blue-500"
+                                    className="h-4 w-4 text-blue-500 dark:text-blue-400"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -112,7 +110,7 @@ function ModalImage({ imageURL, setIsImageOpen, downloadCount, likeCount, viewCo
                             <div className="flex items-center space-x-2">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    className="h-4 w-4 text-red-500"
+                                    className="h-4 w-4 text-red-500 dark:text-red-400"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -130,7 +128,7 @@ function ModalImage({ imageURL, setIsImageOpen, downloadCount, likeCount, viewCo
                             <div className="flex items-center space-x-2">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    className="h-4 w-4 text-green-500"
+                                    className="h-4 w-4 text-green-500 dark:text-green-400"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -148,7 +146,7 @@ function ModalImage({ imageURL, setIsImageOpen, downloadCount, likeCount, viewCo
                             <div className="flex items-center space-x-2">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    className="h-4 w-4 text-gray-500"
+                                    className="h-4 w-4 text-gray-500 dark:text-gray-400"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -166,7 +164,7 @@ function ModalImage({ imageURL, setIsImageOpen, downloadCount, likeCount, viewCo
                             <div className="flex items-center space-x-2">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    className="h-4 w-4 text-orange-500"
+                                    className="h-4 w-4 text-orange-500 dark:text-orange-400"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -187,7 +185,7 @@ function ModalImage({ imageURL, setIsImageOpen, downloadCount, likeCount, viewCo
                                 href={unsplashURL}
                                 target="_blank"
                                 rel="noreferrer noopener"
-                                className="flex items-center justify-center space-x-2 bg-indigo-500 text-white text-sm font-semibold py-2 px-4 rounded-md hover:bg-indigo-600 transition-all duration-200"
+                                className="flex items-center justify-center space-x-2 bg-indigo-500 dark:bg-indigo-600 text-white dark:text-gray-100 text-sm font-semibold py-2 px-4 rounded-md hover:bg-indigo-600 dark:hover:bg-indigo-700 transition-all duration-200"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
