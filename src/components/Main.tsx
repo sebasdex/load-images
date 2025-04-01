@@ -10,6 +10,10 @@ interface UnsplashImage {
     likes: number;
     views: number;
     alt_description: string;
+    created_at: string;
+    width: number;
+    height: number;
+    links: { html: string };
 }
 
 interface UnsplashImageData {
@@ -22,6 +26,9 @@ interface UnsplashImageData {
     likesNumber: number;
     viewsNumber: number;
     imageDescription: string;
+    datePublished: string;
+    dimensions: string;
+    unsplashURL: string;
 }
 
 function Main() {
@@ -35,6 +42,9 @@ function Main() {
     const [description, setDescription] = useState("");
     const [imageUser, setImageUser] = useState("");
     const [profileImage, setProfileImage] = useState("");
+    const [datePublished, setDatePublished] = useState("");
+    const [dimensions, setDimensions] = useState("");
+    const [unsplashURL, setUnsplashURL] = useState("");
 
     useEffect(() => {
         const getImages = async () => {
@@ -54,6 +64,7 @@ function Main() {
                 }
 
                 const data: UnsplashImage[] = await response.json();
+                console.log(data);
                 const newImages = data.map((image: UnsplashImage) => ({
                     idImage: image.id,
                     urlImage: image.urls.regular,
@@ -64,7 +75,9 @@ function Main() {
                     likesNumber: image.likes,
                     viewsNumber: image.views,
                     imageDescription: image.alt_description,
-
+                    datePublished: image.created_at,
+                    dimensions: image.width + " x " + image.height,
+                    unsplashURL: image.links.html,
                 }));
 
                 setImages((prev) => {
@@ -92,6 +105,16 @@ function Main() {
         setDescription(image.imageDescription);
         setImageUser(image.imageUser);
         setProfileImage(image.profileImage);
+        setDatePublished(() => {
+            const date = new Date(image.datePublished);
+            return date.toLocaleDateString('es-ES', {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+            });
+        });
+        setDimensions(image.dimensions);
+        setUnsplashURL(image.unsplashURL);
     };
 
     const handleCloseModal = () => {
@@ -140,7 +163,7 @@ function Main() {
             )}
 
             {selectedImageUrl && (
-                <ModalImage imageURL={selectedImageUrl} setIsImageOpen={handleCloseModal} downloadCount={downloadCount} likeCount={likeCount} viewCount={viewCount} description={description} imageUser={imageUser} profileImage={profileImage} />
+                <ModalImage imageURL={selectedImageUrl} setIsImageOpen={handleCloseModal} downloadCount={downloadCount} likeCount={likeCount} viewCount={viewCount} description={description} imageUser={imageUser} profileImage={profileImage} datePublished={datePublished} dimensions={dimensions} unsplashURL={unsplashURL} />
             )}
         </main>
     );
