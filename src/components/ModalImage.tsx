@@ -19,9 +19,10 @@ interface ModalImageProps {
     datePublished: string;
     dimensions: string;
     unsplashURL: string;
+    topics: string[];
 }
 
-function ModalImage({ imageURL, setIsImageOpen, downloadCount, likeCount, viewCount, description, imageUser, profileImage, datePublished, dimensions, unsplashURL }: ModalImageProps) {
+function ModalImage({ imageURL, setIsImageOpen, downloadCount, likeCount, viewCount, description, imageUser, profileImage, datePublished, dimensions, unsplashURL, topics }: ModalImageProps) {
     useEffect(() => {
         const escFunction = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
@@ -37,6 +38,7 @@ function ModalImage({ imageURL, setIsImageOpen, downloadCount, likeCount, viewCo
     const handleCloseModal = () => {
         setIsImageOpen(false);
     }
+
     return (
         <dialog className="fixed z-10 inset-0 w-full h-full bg-black/70 dark:bg-gray-900/80 backdrop-blur-sm flex items-center justify-center p-4 md:p-6">
             {/* Botón de cerrar */}
@@ -82,6 +84,27 @@ function ModalImage({ imageURL, setIsImageOpen, downloadCount, likeCount, viewCo
                         <p className="text-sm text-gray-700 dark:text-gray-300 italic leading-tight">
                             {description || "No description available"}
                         </p>
+                    </div>
+
+                    {/* Topics */}
+                    <div className="mb-4 space-y-1">
+                        <p className="font-semibold text-gray-800 dark:text-gray-200">Topics:</p>
+                        <div className="flex flex-wrap gap-1.5">
+                            {topics.length > 0 ? (
+                                topics.map((topic, index) => (
+                                    <span
+                                        key={index}
+                                        className="px-2 py-0.5 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-medium rounded-full border border-gray-300 dark:border-gray-500"
+                                    >
+                                        {topic}
+                                    </span>
+                                ))
+                            ) : (
+                                <span className="text-gray-600 dark:text-gray-400 text-xs italic">
+                                    No topics available
+                                </span>
+                            )}
+                        </div>
                     </div>
 
                     {/* Info adicional */}
