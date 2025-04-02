@@ -122,7 +122,7 @@ function Main({ isDark }: { isDark: boolean }) {
     };
 
     return (
-        <main className={`${isDark ? "dark" : ""} min-h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900`}>
+        <main className={`${isDark ? "dark" : ""} min-h-screen min-w-80 flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900`}>
             <section className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl p-6 rounded-xl bg-white dark:bg-gray-900">
                 {images.slice(0, visibleImages).map((image) => (
                     <div

@@ -6,7 +6,7 @@ function Header({ toggleDarkMode, isDark }: { toggleDarkMode: () => void, isDark
 
     return (
         <>
-            <header className={`${isDark ? "dark" : ""} px-6 py-6 bg-white dark:bg-gray-900 relative flex justify-center items-center`}>
+            <header className={`${isDark ? "dark" : ""} px-6 py-6 bg-white dark:bg-gray-900 relative flex justify-center items-center min-w-80`}>
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-white to-teal-500 dark:from-gray-900 dark:to-teal-400 rounded-full"></div>
                 <h1 className="text-4xl md:text-6xl font-extrabold text-gray-800 dark:text-gray-100 text-center tracking-tighter uppercase flex items-center space-x-1 z-10">
                     <span className="relative">
