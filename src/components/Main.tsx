@@ -133,6 +133,7 @@ function Main({ isDark }: { isDark: boolean }) {
                         <img
                             src={image.urlImage}
                             alt={`Photo by ${image.imageUser}`}
+                            loading="lazy"
                             className="w-full h-64 object-cover flex items-center justify-center transition-opacity duration-300 group-hover:opacity-90"
                         />
                         <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-gray-800/80 dark:from-gray-900/80 to-transparent p-2 flex items-center justify-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out">
