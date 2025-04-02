@@ -14,6 +14,7 @@ interface UnsplashImage {
     width: number;
     height: number;
     links: { html: string };
+    topic_submissions: { name: string }[];
 }
 
 interface UnsplashImageData {
@@ -29,6 +30,7 @@ interface UnsplashImageData {
     datePublished: string;
     dimensions: string;
     unsplashURL: string;
+    topics: string[];
 }
 
 function Main({ isDark }: { isDark: boolean }) {
@@ -45,6 +47,7 @@ function Main({ isDark }: { isDark: boolean }) {
     const [datePublished, setDatePublished] = useState("");
     const [dimensions, setDimensions] = useState("");
     const [unsplashURL, setUnsplashURL] = useState("");
+    const [topics, setTopics] = useState<string[]>([]);
 
     useEffect(() => {
         const getImages = async () => {
@@ -56,6 +59,7 @@ function Main({ isDark }: { isDark: boolean }) {
                     headers: {
                         "Content-Type": "application/json",
                         "Authorization": `Client-ID ${import.meta.env.VITE_ACCESS_KEY}`,
+
                     },
                 });
 
@@ -78,6 +82,7 @@ function Main({ isDark }: { isDark: boolean }) {
                     datePublished: image.created_at,
                     dimensions: image.width + " x " + image.height,
                     unsplashURL: image.links.html,
+                    topics: Object.keys(image.topic_submissions),
                 }));
 
                 setImages((prev) => {
@@ -115,6 +120,7 @@ function Main({ isDark }: { isDark: boolean }) {
         });
         setDimensions(image.dimensions);
         setUnsplashURL(image.unsplashURL);
+        setTopics(image.topics);
     };
 
     const handleCloseModal = () => {
@@ -176,6 +182,7 @@ function Main({ isDark }: { isDark: boolean }) {
                     datePublished={datePublished}
                     dimensions={dimensions}
                     unsplashURL={unsplashURL}
+                    topics={topics}
                 />
             )}
         </main>
