@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import ModalImage from "./ModalImage";
 
 interface UnsplashImage {
@@ -48,6 +48,8 @@ function Main({ isDark }: { isDark: boolean }) {
     const [dimensions, setDimensions] = useState("");
     const [unsplashURL, setUnsplashURL] = useState("");
     const [topics, setTopics] = useState<string[]>([]);
+    const scrollToTopRef = useRef<HTMLDivElement>(null);
+    const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
         const getImages = async () => {
@@ -68,7 +70,6 @@ function Main({ isDark }: { isDark: boolean }) {
                 }
 
                 const data: UnsplashImage[] = await response.json();
-                console.log(data);
                 const newImages = data.map((image: UnsplashImage) => ({
                     idImage: image.id,
                     urlImage: image.urls.regular,
@@ -115,6 +116,18 @@ function Main({ isDark }: { isDark: boolean }) {
         };
     }, [selectedImageUrl]);
 
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollPosition = window.scrollY;
+            setIsVisible(scrollPosition >= 1500);
+        };
+        handleScroll();
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+
     const handleImageClick = (url: string, image: UnsplashImageData) => {
         setSelectedImageUrl(url);
         setDownloadCount(image.downloadsNumber);
@@ -141,7 +154,7 @@ function Main({ isDark }: { isDark: boolean }) {
     };
 
     return (
-        <main className={`${isDark ? "dark" : ""} min-h-screen min-w-80 flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900`}>
+        <main className={`${isDark ? "dark" : ""} relative min-h-screen min-w-80 flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900`}>
             <section className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl p-6 rounded-xl bg-white dark:bg-gray-900">
                 {images.slice(0, visibleImages).map((image) => (
                     <div
@@ -198,6 +211,28 @@ function Main({ isDark }: { isDark: boolean }) {
                     topics={topics}
                 />
             )}
+            <div
+                className={`fixed bottom-4 right-4 justify-center items-center bg-white dark:bg-gray-700/10 rounded-full shadow-lg p-2 transition-all duration-300 ease-in-out ${isVisible ? "flex opacity-100 scale-100" : "opacity-0 scale-80 pointer-events-none"
+                    }`}
+                ref={scrollToTopRef}
+            >
+                <button
+                    className="flex items-center justify-center w-10 h-10 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 focus:outline-none hover:cursor-pointer"
+                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                    aria-label="Scroll to top"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                    >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                    </svg>
+                </button>
+            </div>
         </main>
     );
 }
