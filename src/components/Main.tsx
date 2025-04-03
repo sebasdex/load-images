@@ -102,6 +102,19 @@ function Main({ isDark }: { isDark: boolean }) {
         }
     }, [visibleImages, images.length]);
 
+    // Bloquear scroll si hay un modal abierto
+    useEffect(() => {
+        if (selectedImageUrl) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, [selectedImageUrl]);
+
     const handleImageClick = (url: string, image: UnsplashImageData) => {
         setSelectedImageUrl(url);
         setDownloadCount(image.downloadsNumber);
