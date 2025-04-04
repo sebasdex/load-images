@@ -1,6 +1,6 @@
 # PicsVibe - Galería de Imágenes con Unsplash
 
-![PicsVibe Screenshot](./picsvibe.webp)
+![PicsVibe Screenshot](src/assets/screen.jpg)
 
 Aplicación web para explorar imágenes de Unsplash, modal de detalles y soporte para modo claro/oscuro.
 
@@ -31,4 +31,4 @@ Aplicación web para explorar imágenes de Unsplash, modal de detalles y soporte
    YOUR_ENVIROMENT_VARIABLE=YOUR_KEY_NAME
 
 ## 🌟 Demo
-Puedes probar la aplicación en Demo en https://picsvibe.netlify.app
+Puedes probar la aplicación en [PicsVibe](https://picsvibe.netlify.app)
