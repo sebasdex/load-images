@@ -1,54 +1,34 @@
-# React + TypeScript + Vite
+# PicsVibe - Galería de Imágenes con Unsplash
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![PicsVibe Screenshot](./picsvibe.webp)
 
-Currently, two official plugins are available:
+Aplicación web para explorar imágenes de Unsplash, modal de detalles y soporte para modo claro/oscuro.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Características
 
-## Expanding the ESLint configuration
+- 📸 Conexión con la API de Unsplash
+- ♾️ Carga de imágenes al hacer clic en "Ver más"
+- 🔍 Modal con información detallada de cada imagen
+- 🌗 Toggle entre modo claro y oscuro
+- 🎨 Diseño responsive con Tailwind CSS
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠️ Tecnologías
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- React
+- TypeScript
+- Tailwind CSS
+- API de Unsplash
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📦 Instalación
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. Clonar el repositorio:
+   ```bash    
+   git clone https://github.com/sebasdex/load-images.git
+   cd load-images
+   pnpm install
+2. Crea Variable de entorno .env
+   ```bash    
+   YOUR_ENVIROMENT_VARIABLE=YOUR_KEY_NAME
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## 🌟 Demo
+Puedes probar la aplicación en Demo en https://picsvibe.netlify.app
